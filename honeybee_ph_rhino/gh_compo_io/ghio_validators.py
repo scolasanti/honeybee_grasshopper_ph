@@ -109,6 +109,18 @@ class NotNone(Validated):
         raise ValueError("Error: value for {} may not be None.".format(name))
 
 
+class Boolean(Validated):
+    """A boolean value."""
+
+    def validate(self, name, new_value, old_value):
+        if new_value is None:
+            if self.default is not None:
+                return bool(self.default)
+            return old_value
+
+        return bool(new_value)
+
+
 class HBName(Validated):
     """A String which is valid as an HB-Room or HB-Model display name."""
 
